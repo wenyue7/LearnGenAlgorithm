@@ -591,9 +591,16 @@ $$
 上式右边则称为 Laplace 反演积分，或 反变换
 
 
-## 离散傅里叶级数
+## 关系
 
-## 离散傅里叶变换
+$$
+\begin{align}
+Fourier Series \quad \overset{周期 \to \infty}{\longrightarrow} \quad \quad Fourier Transform \\
+Fourier Transform \quad \overset{两边乘上 u(t) e^{-\beta t}}{\longrightarrow} \quad \quad Laplace Transform \\
+\end{align}
+$$
+
+# 离散变换
 
 ## Z变换
 
@@ -614,3 +621,6 @@ $$
 故：$E^*(s) = \sum_{n=0}^{\infty} e(nT) e^{-nsT}$
 
 令 $\delta = e^{sT}$ 得 $E(z) = E^*(s)|_{s=\frac{1}{T}ln(z)} = \sum_{n=0}^{\infty}e(nT)z^{-n}$
+## 离散傅里叶级数
+
+## 离散傅里叶变换
