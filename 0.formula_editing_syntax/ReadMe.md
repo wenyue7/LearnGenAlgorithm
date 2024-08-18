@@ -24,35 +24,36 @@ $$
 * 小写希腊字母如`\alpha`、`\beta`、`\gamma`等，大写则首字母大写，如`\Alpha`、`\Beta`。
 * 示例：$\alpha$，$\Gamma$
 
-| 符号 | LaTex命令 |
-|--|--|
-| α | \alpha      |
-| β | \beta       |
-| γ | \gamma      |
-| δ | \delta      |
-| ϵ | \epsilon    |
-| ε | \varepsilon |
-| ζ | \zeta       |
-| η | \eta        |
-| θ | \theta      |
-| ϑ | \vartheta   |
-| ι | \iota       |
-| κ | \kappa      |
-| λ | \lambda     |
-| μ | \mu         |
-| ν | \nu         |
-| ξ | \xi         |
-| π | \pi         |
-| ρ | \rho        |
-| ϱ | \varrho     |
-| σ | \sigma      |
-| τ | \tau        |
-| υ | \upsilon    |
-| ϕ | \phi        |
-| φ | \varphi     |
-| χ | \chi        |
-| ψ | \psi        |
-| ω | \omega      |
+| 符号  | LaTex命令     |
+| --- | ----------- |
+| α   | \alpha      |
+| β   | \beta       |
+| γ   | \gamma      |
+| δ   | \delta      |
+| ϵ   | \epsilon    |
+| ε   | \varepsilon |
+| ζ   | \zeta       |
+| η   | \eta        |
+| θ   | \theta      |
+| ϑ   | \vartheta   |
+| ι   | \iota       |
+| κ   | \kappa      |
+| λ   | \lambda     |
+| μ   | \mu         |
+| ν   | \nu         |
+| ξ   | \xi         |
+| π   | \pi         |
+| ρ   | \rho        |
+| ϱ   | \varrho     |
+| σ   | \sigma      |
+| τ   | \tau        |
+| υ   | \upsilon    |
+| ϕ   | \phi        |
+| φ   | \varphi     |
+| χ   | \chi        |
+| ψ   | \psi        |
+| ω   | \omega      |
+| 花写  | \mathcal    |
 
 
 2. 上下标
