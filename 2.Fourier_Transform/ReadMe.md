@@ -439,25 +439,83 @@ $$
 
 
 以$t$为变量，有复数形式的傅里叶级数如下：
-
 $$ f(t) = \sum_{n = -\infty}^{\infty} C_n e ^{i \frac{n \pi t}{l}} $$
 
 其中，
-
 $$ Cn = \frac{1}{2l} \int_{-l}^{l} f(t) e^{-i \frac{n \pi t}{l}} \, d(t) \quad (n = \pm1, \pm2, \pm3, \ldots)$$
 
 
 ## 傅里叶变换
 
-周期$2l \rightarrow \infty$，$w_0 = \frac{2\pi}{2l} \rightarrow 0 (\triangle w)$
+> ref：《积分变换》-- 东南大学数学系 张元林 编 P5
 
+有复数形式的傅里叶级数如下：
+$$ f(t)_{2l} = \sum_{n = -\infty}^{\infty} C_n e ^{i \frac{n \pi t}{l}} $$
+
+其中，
+$$ Cn = \frac{1}{2l} \int_{-l}^{l} f(t)_{2l} \, e^{-i \frac{n \pi t}{l}} \, dt \quad (n = \pm1, \pm2, \pm3, \ldots)$$
+
+即：
+$$ f(t)_{2l} = \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i \frac{n \pi \tau}{l}} \, d\tau \, e ^{i \frac{n \pi t}{l}} $$
+由于$C_n$是一个常数，因此这里为了区分，将$C_n$得积分变量改为$\tau$
+
+令$w= \frac{2\pi}{2l} = \frac{\pi}{l}$得：
+$$ f(t)_{2l} = \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i n w \tau} \, d\tau \, e ^{i n w t} $$
+
+令$w_n = nw \quad (n = 0, \pm1, \pm2,...)$得：
+$$ f(t)_{2l} = \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} $$
+
+由于$Cn = \frac{1}{2l} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \quad (n = \pm1, \pm2, \pm3, \ldots)$，对于固定的周期$2l$是一个常数，因此这里可以直接把它当成一个常数看待，当周期$2l \rightarrow \infty$，$w_0 = \frac{2\pi}{2l} = \frac{\pi}{l} \rightarrow 0 (\triangle w)$时，将$l = \frac{\pi}{w_0}$代入
+$$
+\begin{align}
+f(t)_{2l} &= \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \\
+&= \frac{2 \pi}{2l} * \frac{1}{2 \pi} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \\
+&= \frac{\pi}{l} * \frac{1}{2 \pi} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \\
+&= \triangle w * \frac{1}{2 \pi} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \\
+&= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+&= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+\end{align}
+$$
+
+又因为$\lim_{l \to \infty}$，因此有：
+$$
+\begin{align}
+f(t) &= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+&= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(\tau) \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+\end{align}
+$$
+上式称为傅里叶积分公式，其中间的积分为$F(w)$，即傅里叶变换：
+$$
+F(w) = \int_{-\infty}^{\infty} f(\tau) \, e^{-i w_n \tau} \, d\tau
+$$
+外边的积分为傅里叶反变换，即：
+$$
+f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} F(w) \, e ^{i w_n t} \, dw
+$$
+
+总结如下：
 $$
 \begin{cases}
-f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f(t) e^{-iwt} dt \, e^{iwt} dw, \quad 周期：\infty，中间的积分也即 F(w)\\
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} f(\tau) e^{-iw\tau} d\tau \, e^{iwt} dw, \quad 周期：\infty，中间的积分也即 F(w)\\
 F(w) = \int_{-\infty}^{+\infty} f(t) e^{-iwt} dt, \quad 傅里叶变换(FT) \\
 f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(w) e^{iwt} dw, \quad 傅里叶反变换(IFT)
 \end{cases}
 $$
+
+对应傅里叶积分公式，给出傅里叶（Fourier）积分定理：
+1. $f(t)$在任一有限区间上满足Dirichlet条件
+2. $f(t)$在无限区间$(-\infty, \infty)$上绝对可积（即积分$\int_{-\infty}^{\infty}|f(t)|dt$收敛
+则有：
+$$
+f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(\tau) \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+$$
+成立，而左端的$f(t)$在他的间断点$t$处，应以$\frac{f(t + 0) +f(t - 0)}{2}$来代替。这个定理的条件是充分的，他的证明需要用到较多的理论基础，这里从略
+
+
+
+## 拉普拉斯变换
+
+
 
 当$F(w)$中，$s=iw$，则成为拉普拉斯变换：
 
