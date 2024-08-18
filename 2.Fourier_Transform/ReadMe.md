@@ -445,7 +445,7 @@ $$ f(t) = \sum_{n = -\infty}^{\infty} C_n e ^{i \frac{n \pi t}{l}} $$
 $$ Cn = \frac{1}{2l} \int_{-l}^{l} f(t) e^{-i \frac{n \pi t}{l}} \, d(t) \quad (n = \pm1, \pm2, \pm3, \ldots)$$
 
 
-## 傅里叶变换
+## 傅里叶(Fourier)变换
 
 > ref：《积分变换》-- 东南大学数学系 张元林 编 P5
 
@@ -513,23 +513,83 @@ $$
 
 
 
-## 拉普拉斯变换
+## 拉普拉斯(Laplace)变换
+
+### 拉普拉斯正变换
+
+> ref：《积分变换》-- 东南大学数学系 张元林 编 P90
+
+傅里叶变换的绝对可积的条件是比较强的，许多函数即使是很简单的函数（例如单位阶跃函数、正弦、余弦函数以及线性函数等）都不满足这个条件，其次可以进行Fourier变换的函数必须在整个数轴上有定义，但在物理、无线电技术等实际应用中，许多以$t$作为自变量的函数往往在$t < 0$时是无意义的或者是不需要考虑的，像这样的函数都不能区Fourier变换。这就使得Fourier变换的应用范围受到相当大的限制。
+
+对于任意一个函数$\phi(t)$，能否经过适当的改造使其进行Fourier变换时克服上述两个缺点呢？这就使我们想到前面讲过的单位阶跃函数$u(t)$和指数衰减函数$e^{-\beta t}(\beta > 0)$所具有的特点，用前者乘上$\phi(t)$可以使积分区间由$(-\infty, \infty)$换成$[0, \infty)$，用后者称$\phi(t)$就有可能使其变成绝对可积，因此，为了克服Fourier变换上述哦两个缺点，自然会想到用$u(t)e^{-\beta t}(\beta > 0)$来乘$\phi(t)$，即：
+$$\phi(t)u(t)e^{-\beta t}(\beta > 0)$$
+结果发现，只要$\beta$选得适当，一般来说，这个函数的Fourier变换总是存在的。对函数$\phi(t)$进行先乘$u(t)e^{-\beta t}(\beta > 0)$，再取Fourier变换的运算，这样就产生了 Laplace 变换。
+
+对函数$\phi(t)u(t)e^{-\beta t}(\beta > 0)$取Fourier变换，可得：
+$$
+\begin{align}
+G_{\beta}(w) &= \int_{-\infty}^{\infty} \phi(t)u(t)e^{-\beta t}e^{-iwt}dt \\
+&= \int_{0}^{\infty} f(t) e^{-(\beta + iw)t} \, dt \\
+&= \int_{0}^{\infty} f(t) e^{-st} \, dt \\
+\end{align}
+$$
+其中
+$$s = \beta + iw, \quad f(t) = \phi(t)u(t)$$
+若再设$F(s) = G_{\beta}(\frac{s - \beta}{i})$，则得：
+$$
+\begin{align}
+F(s) &= G_{\beta}(\frac{s - \beta}{i}) \\
+&= \int_{0}^{\infty} f(t) e^{-(\beta + i \frac{s - \beta}{i}) t} \, dt \\
+&= \int_{0}^{\infty} f(t) e^{-s t} \, dt \\
+\end{align}
+$$
+这一步只是为了把自变量$w$换成$s$，上式被称为Laplace变换。
+
+**定义**：
+
+设函数$f(t)$当$t \geq 0$时有定义，而且积分
+$\int_{0}^{+\infty} f(t) e^{-st} dt (s是一个复参量)$
+在复平面$s$得某一区域内收敛，由此积分所确定的函数记为：
+$$
+F(s) = \int_{0}^{+\infty} f(t) e^{-st} dt
+$$
+则称上式为函数$f(t)$得Laplace变换式
 
 
+**Laplace变换的存在定理**：
 
-当$F(w)$中，$s=iw$，则成为拉普拉斯变换：
+1. 在$t \geq 0$的任一有限区间上连续或分段连续
+2. 当$t \rightarrow {+\infty}$时，$f(t)$的增长速度不超过某一指数函数，亦即存在常数$M > 0$及$c \geq 0$，使得$|f(t)| \leq Me^{ct}, \quad 0 \leq t < +\infty$成立（满足此条件的函数，称他的增大是不超过指数级的，$c$为他的增长指数）
+则$f(t)$的Laplace变换
+$$
+F(s) = \int_{0}^{+\infty} f(t) e^{-st} dt
+$$
+在半平面$Re(s) > c$上一定存在，有短的积分在$Re(s) \geq c > c$上绝对收敛而且一致收敛，并且在$Re(s) > c$的半平面内，$F(s)$为解析函数
 
-$F(s) = \int_{-\infty}^{+\infty} f(t) e^{-st} dt$ 拉普拉斯变换(Laplace)，其中$-\infty$通常取0
 
-拉普拉斯变换：
+### 拉普拉斯逆变换
 
-$F(s) = \int_{0}^{+\infty}f(t) e^{-st}dt$
+由Laplace变换的概念可知，函数$f(t)$的Laplace变换，实际上就是$F(t)u(t)e^{-\beta t}$的Fourier变换。于是，当$f(t)u(t)e^{-\beta t}$满足Fourier积分定理的条件时，按Fourier积分公式，在$f(t)$连续点处有：
+$$
+\begin{align}
+f(t)u(t)e^{-\beta t} &= \frac{1}{2\pi} \int_{-\infty}^{+\infty} \left[\int_{-\infty}^{+\infty} f(\tau) u(\tau) e^{-\beta \tau} e^{-iw\tau} d\tau \right] \, e^{iwt} dw \\
+&= \frac{1}{2\pi} \int_{-\infty}^{+\infty} \, e^{iwt} dw \left[\int_{0}^{+\infty} f(\tau) u(\tau) e^{-(\beta + iw)\tau} d\tau \right] \\
+&= \frac{1}{2\pi} \int_{-\infty}^{+\infty} \, F(\beta + iw) e^{iwt} dw, \quad (t > 0) \\
+\end{align}
+$$
+等式两边同乘$e^{\beta t}$并考虑到他与积分变量$w$无关，则
+$$
+f(t) = \frac{1}{2\pi} \int_{-\infty}^{+\infty} \, F(\beta + iw) e^{(\beta + iw)t} dw, \quad (t > 0) \\
+$$
+令$\beta + iw = s(即 w = \frac{s - \beta}{i}$，则有
+$$
+\begin{align}
+f(t) &= \frac{1}{2\pi} \int_{\beta - i\infty}^{\beta + i\infty} \, F(s) e^{st} \frac{d[s - \beta]}{i} \\
+&= \frac{1}{2\pi i} \int_{\beta - i\infty}^{\beta + i\infty} \, F(s) e^{st} ds \quad (t > 0)
+\end{align}
+$$
+上式右边则称为 Laplace 反演积分，或 反变换
 
-$s=\beta=jw$
-
-$e^{-st}=e^{-\beta t}e^{-jwt}$
-
-其中 $e^{-\beta t}$ 与 $f(t)$ 相乘使其满足在 $(-\infty, +\infty)$绝对可积的条件
 
 ## 离散傅里叶级数
 
@@ -537,7 +597,7 @@ $e^{-st}=e^{-\beta t}e^{-jwt}$
 
 ## Z变换
 
-欧拉公式：$e^{i\theta} = \cos(\theta) + j\sin(\theta)$
+欧拉公式：$e^{i\theta} = \cos(\theta) + i\sin(\theta)$
 
 T为采样周期
 $$e(t) \overset{采样}{\longrightarrow} e^*(t) = \sum_{n=0}^{\infty} e(nT) \delta(t-nT) $$
