@@ -757,6 +757,35 @@ $$
 x(t) \overset{采样}{\longrightarrow} x_s(nT_s) \overset{Laplace Trans}{\longrightarrow} X(s) \overset{z = e^{sT_s}}{\longrightarrow} X(z)
 $$
 
+## 离散傅里叶变换(DTFT)
+
+拉普拉斯复变量$s = \rho + j \Omega$，式中$\Omega = 2 \pi f$，是相对连续系统及连续信号的角频率，单位为$rad/s$。由$z = e^{sT_s}$得：
+$$
+z = e^{sT_s} = e^{(\rho + j \Omega)T_s = e^{\rho T_s} e^{j\Omega T_s}}
+$$
+令：
+$$
+\begin{cases}
+r = e^{\rho T_s} \\
+w = \Omega T_s \\
+\end{cases}
+$$
+则
+$$
+z = re^{jw}
+$$
+$w$是相对离散系统和离散信号得圆周频率，单位为$rad$。将上式代入$Z$变换得：
+$$
+X(z) = \sum_{n = -\infty}^{\infty} x(n) (re^{jw})^{-n} = \sum_{n = -\infty}^{\infty} \left[ x(n)r^{-n} \right] e^{-jwn}
+$$
+这一结果说明，只要$x(n)r^{-n}$符合绝对可和的收敛条件，即$\sum_{n = -\infty}^{\infty} \left| x(n)r^{-n} \right| < \infty$，则$x(n)$的$Z$变换存在。这样，一个序列$x(n)$的$Z$变换，又可看成是该序列乘以一实加权序列$r^{-n}$后的傅立叶变换，即：
+$$
+X(z) = \mathcal{F}[x(n)r^{-n}]e^{-jwn}
+$$
+如果$r = 1$，则：
+$$
+X(z) |_{z = e^{jw}} = X(e^{jw}) = \sum_{n = -\infty}^{\infty}x(n)e^{-jwn}
+$$
+这时$Z$变换就演变为离散序列的傅里叶变换(DTFT)
 ## 离散傅里叶级数
 
-## 离散傅里叶变换
