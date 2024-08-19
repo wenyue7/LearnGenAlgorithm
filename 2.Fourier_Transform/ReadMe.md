@@ -621,6 +621,142 @@ $$
 故：$E^*(s) = \sum_{n=0}^{\infty} e(nT) e^{-nsT}$
 
 令 $\delta = e^{sT}$ 得 $E(z) = E^*(s)|_{s=\frac{1}{T}ln(z)} = \sum_{n=0}^{\infty}e(nT)z^{-n}$
+
+
+### 前备知识点
+
+> ref: 《数字信号处理》胡广书 P10
+
+#### 单位抽样信号
+$$
+\delta(n) =
+\begin{cases}
+1 \quad n = 0 \\
+0 \quad n \neq 0 \\
+\end{cases}
+$$
+$\delta(n)$又称Kronecker函数。该信号在离散信号与离散系统的分析与综合中有重要作用，其地位犹如单位冲激信号对于连续时间信号与连续时间系统。但$\delta(n)$和$\delta(t)$的定义不同。$\delta(t)$是建立在积分的定义上，即
+$$
+\int_{-\infty}^{\infty} \delta(t) dt = 1
+$$
+且$t \neq 0$时，$\delta(t) = 0$。$\delta(t)$表示在极短的时间内所产生的巨大“冲激”，而$\delta(n)$在$t=0$时定义为1。$\delta(t)$又称Dirac函数
+
+#### 脉冲串序列$p(n)$
+
+将$\delta(n)$在时间轴上延迟$k$个采样周期，得$\delta(n-k)$，则
+$$
+\delta(n) =
+\begin{cases}
+1 \quad n = k \\
+0 \quad n \neq k \\
+\end{cases}
+$$
+在上式中，若$k$从$-\infty$变到$+\infty$，那么$\delta(n)$的所有移位可形成一个无限长的脉冲串序列$p(n)$，即
+$$
+p(n) = \sum_{k = -\infty}^{\infty} \delta(n - k)
+$$
+如果移位的不是$\delta(n)$而是单位冲激信号$\delta(t)$，那么可以得到冲击串序列$p(t)$，即：
+$$
+p(t) = \sum_{-\infty}^{\infty} \delta(t - nT_s)
+$$
+若将连续信号$x(t)$与$p(t)$相乘，可得到离散信号$x(nT_s)$或$x(n)$，即：
+$$
+x(nT_s) = x(n) = x(t)p(t) = x(t)\sum_{-\infty}^{\infty} \delta(t - nT_s)
+$$
+之所以使用$p(t)$乘以$x(t)$得到离散信号，而不是用$p(n)$和$x(t)$相乘，是因为$p(t)$有着积分性质，便于对上式做进一步的数学讨论
+
+![](./pic.assets/1.jpg)
+![](./pic.assets/2.jpg)
+
+#### 单位阶跃序列
+
+$$
+u(n) =
+\begin{cases}
+1 \quad n \geq 0 \\
+0 \quad n < 0
+\end{cases}
+$$
+若序列$y(n) = x(n)u(n)$，那么$y(n)$的自变量$n$的取值就限定在$n \geq 0$的有半轴上
+
+#### 正弦序列
+
+$$
+x(n) = A\sin{(2 \pi fnT_s + \phi)}
+$$
+式中$f$是频率，单位为$Hz$，令$\Omega = 2 \pi f$，则$\Omega$的单位为$rad/s$，$\Omega$是相对连续信号$x(t)$的连续角频率变量，当$f$由$-\infty$增至$+\infty$时，$\Omega$也由$-\infty$增至$\infty$，令：
+$$
+w = 2 \pi f T_s = 2 \pi \frac{f}{f_s}, \, f_s = \frac{1}{T_s}
+$$
+$f_s$又称抽样频率。显然，当$f$由0增至$f_s$时，$w$由0增至$2 \pi$，当$f$由0减至$-f_s$时，$w$由0变为$-2\pi$，当$f$再增加或再减少$f_s$的整数倍时，$w$重复$0 \sim \pm 2\pi$。$w$的单位是$rad$，我们称$w$为圆周频率或圆频率，他是相对离散信号$x(n)$的频率变量。由前边两式可知，正弦信号可以表示为：
+$$
+x(n) = A \sin{(wn + \phi)}
+$$
+
+#### 复正弦序列
+
+$$
+x(n) = e^{jwn} = \cos{(wn)} + j \sin{(wn)}
+$$
+上式即欧拉公式等式。复正弦$e^{jwn}$在数字信号处理中有着重要的应用，他不但是离散信号作傅里叶变换时的基函数，同时也可作为离散系统的特征函数
+
+#### 指数序列
+
+$$
+x(n) = a^{|n|}
+$$
+式中，$a$为常数且$|a| < 1$
+
+如果$a$为复数，我们可将$a$写$a = r e^{jw_0}$的形式，式中$r > 0, w_0 \neq 0, \pi$，这样，$x(n)$变成复值信号，即 $x(n) = r^{|n|}e^{jw_0|n|}$。若$r < 1$，则$x(n)$为衰减的复正弦，其实部和虚部分别为衰减的实余弦和衰减的实正弦
+
+### 推导过程
+
+> ref: 《数字信号处理》胡广书 P54
+
+$Z$变换的定义可以从两个方面引出，一是直接对离散信号给出定义，二是由抽样信号的拉普拉斯变换过渡到$Z$变换
+
+给定一个离散信号$x(n)$，$n = -\infty ~ +\infty$，可直接给出$x(n)$的$Z$变换的定义
+$$
+X(z) = \sum_{n = -\infty}^{\infty} x(n) z^{-n}
+$$
+式中$z$为一复变量。由于$x(n)$的存在范围是$(-\infty, \infty)$，所以上式定义的$Z$变换称为双边$Z$变换。如果$x(n)$的存在范围是$[0, +\infty)$，那么上式应变成单边$Z$变换，即
+$$
+X(z) = \sum_{n = 0}^{\infty} x(n) z^{-n}
+$$
+由于因果性信号及因果系统的抽样响应$h(n)$在$n < 0$时恒为零，因此实际的物理信号对应的都是单边$Z$变换。
+
+从拉普拉斯变换过渡到$Z$变换：
+
+设连续信号$x(t)$抽样得到$x_s(nT_s)$，即
+$$
+x_s(nT_s) = x(t) \sum_{n = -\infty}^{\infty} \delta(t - nT_s) = \sum_n x(nT_s) \delta(t - nT_s)
+$$
+现在对$x_s(nT_s)$取拉普拉斯变换，得：
+$$
+\begin{align}
+X(s) &= \int_{-\infty}^{\infty} x_s(nT_s)e^{-st} \, dt \\
+&= \int_{-\infty}^{\infty} \left[ \sum_n x(nT_s) \delta(t - nT_s) \right] e^{-st} \, dt \\
+&= \sum_n x(nT_s) \int_{-\infty}^{\infty} \delta(t - nT_s) e^{-st} \, dt \\
+&= \sum_n x(nT_s) e^{-snT_s} \\
+&= X(e^{sT_s}) \\
+\end{align}
+$$
+
+这里用到了脉冲信号的筛选性质，简单可以理解，对 $\int_{-\infty}^{\infty} \delta(t - nT_s) e^{-st} \, dt$积分，由于$\delta(t - nT_s)$是一个时间点的信号，因此可以认为积分区域内$e^{-st} = e^{-snT_s}$，作为一个常数。
+
+令 $z = e^{sT_s}$，这样，$x_s(nT_s)$得拉普拉斯变换式就可以变成另一复变量$z$的变换式，再次将$T_s$归一化为1，即将$x(nT_s)$简记为$x(n)$，那么上式变为
+$$
+X(z) = \sum_{n = -\infty}^{\infty} x(n) z^{-n}
+$$
+这和前边直接给出的定义是一样的
+
+计算$Z$变换的逆变换通常有三种方法：幂级数法、部分分式法、留数法，这里不做介绍，可参考 《数字信号处理》胡广书 P66
+
+总结：
+$$
+x(t) \overset{采样}{\longrightarrow} x_s(nT_s) \overset{Laplace Trans}{\longrightarrow} X(s) \overset{z = e^{sT_s}}{\longrightarrow} X(z)
+$$
+
 ## 离散傅里叶级数
 
 ## 离散傅里叶变换
