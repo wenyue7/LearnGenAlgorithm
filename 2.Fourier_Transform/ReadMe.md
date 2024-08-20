@@ -477,20 +477,20 @@ f(t)_{2l} &= \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l}
 \end{align}
 $$
 
-又因为$\lim_{l \to \infty}$，因此有：
+又因为$\lim_{l \to \infty}$，$w_n$会趋于连续，因此有：
 $$
 \begin{align}
 f(t) &= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
-&= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(\tau) \, e^{-i w_n \tau} \, d\tau \, e ^{i w_n t} \, dw \\
+&= \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(\tau) \, e^{-i w \tau} \, d\tau \, e ^{i w t} \, dw \\
 \end{align}
 $$
 上式称为傅里叶积分公式，其中间的积分为$F(w)$，即傅里叶变换：
 $$
-F(w) = \int_{-\infty}^{\infty} f(\tau) \, e^{-i w_n \tau} \, d\tau
+F(w) = \int_{-\infty}^{\infty} f(\tau) \, e^{-i w \tau} \, d\tau
 $$
 外边的积分为傅里叶反变换，即：
 $$
-f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} F(w) \, e ^{i w_n t} \, dw
+f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} F(w) \, e ^{i w t} \, dw
 $$
 
 总结如下：
@@ -511,7 +511,62 @@ f(t) = \frac{1}{2 \pi} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(\tau) \
 $$
 成立，而左端的$f(t)$在他的间断点$t$处，应以$\frac{f(t + 0) +f(t - 0)}{2}$来代替。这个定理的条件是充分的，他的证明需要用到较多的理论基础，这里从略
 
+## 傅里叶级数和傅里叶变换的区别与联系
 
+1. 傅里叶级数对应的是周期信号，而傅立叶变换对应的是非周期信号
+2. 傅里叶级数要求在一个周期内的能量是有限的，而傅立叶变换要求在整个周期内的能量是有限的
+3. 傅里叶级数的系数是离散的，傅里叶变换是$w$的连续函数
+
+由此可见，傅里叶级数与傅里叶变换的物理含义不同，量纲也不同，$X(j\Omega _0)$（傅里叶级数的系数）代表了周期信号$x(t)$第$k$次谐波幅度的大小，而$X(j\Omega)$（傅里叶变换的系数）是频谱密度的概念。为了说明这一点，我们可以将一个非周期信号视为周期$T$趋于无穷大的周期信号。由$\Omega _0 = \frac{2 \pi}{T}$可知，若$T \rightarrow \infty$，则必有$\Omega _0 \rightarrow 0$，$k \Omega _0 \rightarrow \Omega$，将傅里叶级数两边同乘上$T$(或$2l$)，并取$T \rightarrow \infty$时的极限，可得
+$$
+\lim_{T \to \infty} TX(k \Omega_0) = \lim_{\Omega_0 \to 0} \frac{2 \pi X(k \Omega_0)}{\Omega_0} = X(j\Omega)
+$$
+所以，从量纲上看，$X(j\Omega)$等于谐波幅度$X(k\Omega_0)$除以频率$\Omega_0$，显然，他是频谱密度的概念。
+
+## 周期信号的傅里叶变换
+
+先不考虑Dirichlet条件和能量有限的限制，直接求解周期信号的傅立叶变换。将傅里叶级数带入到傅里叶变换
+$$
+\begin{align}
+F(w) &= \int_{-\infty}^{\infty} \left[ \frac{1}{2l} \sum_{n = -\infty}^{\infty} \int_{-l}^{l} f(\tau)_{2l} \, e^{-i \frac{n \pi \tau}{l}} \, d\tau \, e ^{i \frac{n \pi t}{l}} \right] \, e^{-i w t} \, dt \\
+&= \int_{-\infty}^{\infty} \left[ \sum_{n = -\infty}^{\infty} C_n \, e ^{i \frac{n \pi t}{l}} \right] \, e^{-i w t} \, dt \\
+&= \sum_{n = -\infty}^{\infty} C_n \, \int_{-\infty}^{\infty} \left[ e ^{i \frac{n \pi t}{l}} \right] \, e^{-i w t} \, dt \\
+&= \sum_{n = -\infty}^{\infty} C_n \, \int_{-\infty}^{\infty} \left[ e ^{i w_n t} \right] \, e^{-i w t} \, dt \\
+&= \sum_{n = -\infty}^{\infty} C_n \, \int_{-\infty}^{\infty} e ^{i w_n t} \, e^{-i w t} \, dt \\
+&= \sum_{n = -\infty}^{\infty} C_n \, \int_{-\infty}^{\infty} \, e^{-i w t + i w_n t} \, dt \\
+&= \sum_{n = -\infty}^{\infty} C_n \, \int_{-\infty}^{\infty} \, e^{i (w_n t - w t)} \, dt \\
+\end{align}
+$$
+由积分：
+$$
+\int_{-\infty}^{\infty} e^{\pm jxy} dx = 2 \pi \delta(y)
+$$
+可得到周期信号傅立叶变换的表达式：
+$$
+F(w) = 2 \pi \sum_{k = -\infty}^{\infty} C_n \delta(w - w_n)
+$$
+上式表明，一个周期信号的傅立叶变换是由频率轴上间距为$w_0$的冲击序列(Drac函数)所组成，这些冲击序列的强度等于相应的傅立叶系数乘以$2\pi$。这样的离散频谱又称为“线谱”。由冲击函数的定义和频谱密度的物理概念可知，周期信号的频谱应理解为在无穷小的频率范围内取得了一个“无限大”的频谱密度。无限大是从冲击函数的角度来理解的。冲击函数的强度为$2\pi C_n$，单纯的从$C_n$来理解，它无密度的概念，它代表了在$w_n$出谐波的大小。
+
+由此可以看出，本不具备傅里叶变换条件的周期信号，在引入了冲击信号后也可以做傅里叶变换。当然，变换的结果也应从冲击信号的角度来理解。这样由上式，我们就可以把傅里叶级数和傅里叶变换统一在一个理论框架下来进行讨论，并建立起二者的联系。
+
+由上述的讨论，不难得出如下结论：时域连续的周期信号的傅里叶变换在频率是离散的、非周期的。
+
+当$T\rightarrow\infty$时，上式中的离散频谱将变成连续谱，对应的是周期信号一个周期的傅里叶变换，但由于周期为无穷大，因此，他对应的实际上是非周期信号的傅里叶变换。由此可以得出结论：时域连续的非周期信号的傅里叶变换在频域上是连续的、非周期的。
+
+## 傅立叶变换的进一步解释
+
+傅里叶变换实际上是将信号$x(t)$喝一组不同频率的复正弦作内积，即
+$$
+\begin{cases}
+X(k\Omega_0) = <x(t), e^{jk\Omega_0t}> \quad 傅里叶级数 \\
+X(k\Omega) = <x(t), e^{jk\Omega t}> \quad 傅里叶变换 \\
+\end{cases}
+$$
+式中的复正弦即变换的基向量，而傅里叶系数或傅里叶变换是$x(t)$在这一组基向量上的投影。由于不同频率的正弦信号两两之间是正交的，因此傅里叶变换是正交变换。
+
+将复杂信号分解为简单信号的组合是信号处理中最基本的方法，这样做一个是便于了解所要处理的信号的内涵，另一方面是便于提取信号的特征。那么傅里叶变换为什么要选择正弦信号作为分解的基向量呢？这是因为：
+1. 正弦信号是最规则的信号，可由幅度、相位、频率这是哪个参数完全确定其时域波形。其频域也简单，只有一根谱线（复正弦）。将信号展开为正弦的组合，即可得到所有的谱线，从而得到信号的频谱分布。另外正弦信号处处可导，且有着无穷阶的导数，在信号处理的理论推导方面特别有用。为什么不选时域只取0和1的更简单的方波作为分解的基函数呢，因为但凡是信号在时域中有阶跃（或冲激）的成分，则都需要无穷多的频率成分才能合成这样的阶跃（或冲激）。另外方波的不可导也是一个重要原因。
+2. 时间和频率是两个最重要也是最基本的物理量，而傅里叶变换正好把时间和频率联系了起来，使我们可以在时间和频率之间进行转换
 
 ## 拉普拉斯(Laplace)变换
 
