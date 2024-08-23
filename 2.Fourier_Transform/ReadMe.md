@@ -710,7 +710,7 @@ $$
 $$
 p(n) = \sum_{k = -\infty}^{\infty} \delta(n - k)
 $$
-如果移位的不是$\delta(n)$而是单位冲激信号$\delta(t)$，那么可以得到冲击串序列$p(t)$，即：
+如果移位的不是$\delta(n)$而是单位冲激信号$\delta(t)$，那么可以得到冲激串序列$p(t)$，即：
 $$
 p(t) = \sum_{-\infty}^{\infty} \delta(t - nT_s)
 $$
@@ -813,6 +813,33 @@ x(t) \overset{采样}{\longrightarrow} x_s(nT_s) \overset{Laplace Trans}{\longri
 $$
 
 ## 离散傅里叶变换(DTFT)
+
+### 推导过程
+
+> ref: 《数字信号处理》胡广书 P55
+
+对于连续时间周期信号$x(t)$，若要求其离散傅里叶变换，可将其与冲激串序列$p(t) = p(t) = \sum_{-\infty}^{\infty} \delta(t - nT_s)$ 相乘，然后做傅里叶变换
+
+$$
+\begin{align}
+\mathcal{F}[x(t)p_{T_s}{t}] &= \int_{-\infty}^{\infty} x(t) \sum_{k = -\infty}^{+\infty} \delta(t - nT_s) \, e^{-jwt} dt \\
+&= \sum_{k = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(t) \delta(t - nT_s) \, e^{-jwt} dt \\
+&= \sum_{k = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(nT_s) \delta(t - nT_s) \, e^{-jwnT_s} dt \\
+&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \int_{-\infty}^{\infty} \delta(t - nT_s) \, dt \\
+&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
+\end{align}
+$$
+令$\Omega = wT_s$，则
+$$
+\begin{align}
+\mathcal{F}[x(t)p_{T_s}{t}] &= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
+&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-j\Omega n} \\
+\end{align}
+$$
+
+### 推导过程_法2
+
+> ref: 《数字信号处理》胡广书 P55
 
 拉普拉斯复变量$s = \rho + j \Omega$，式中$\Omega = 2 \pi f$，是相对连续系统及连续信号的角频率，单位为$rad/s$。由$z = e^{sT_s}$得：
 $$
