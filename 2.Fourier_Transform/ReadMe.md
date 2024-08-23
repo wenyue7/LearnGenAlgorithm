@@ -871,3 +871,23 @@ $$
 这时$Z$变换就演变为离散序列的傅里叶变换(DTFT)
 ## 离散傅里叶级数
 
+
+
+四种形式的傅里叶变换：
+
+|                       | 时域     |                                                                          | 频域     |                                                                                  |
+| --------------------- | ------ | ------------------------------------------------------------------------ | ------ | -------------------------------------------------------------------------------- |
+| FT(Fourier Transform) | 连续 非周期 | $X(j\Omega) = \int_{-\infty}^{\infty} x(t) e^{-j\Omega t}dt$             | 连续 非周期 | $x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(j\Omega) e^{j\Omega t} d\Omega$ |
+| FS(Fourier Series)    | 连续 周期  | $X(k\Omega_0) = \frac{1}{T} \int_{-T/2}^{T/2} x(t) e^{-jk\Omega_0 t} dt$ | 离散 非周期 | $x(t) = \sum_{k = -\infty}^{\infty} X(k\Omega_0) e^{jk\Omega_0 t}$               |
+| DTFT                  | 离散 非周期 | $X(e^{jw}) = \sum_{n = -\infty}^{\infty} x(n) e^{-jwn}$                  | 连续 周期  | $x(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{jw}) e^{jwn} dw$                   |
+| DFS                   | 离散 周期  | $X(k) = \sum_{n = 0}^{N-1} x(n) e^{j \frac{2\pi}{N} nk}$                 | 离散 周期  | $x(n) = \frac{1}{N} \sum_{k = 0}^{N-1} X(k) e^{j \frac{2\pi}{N} nk}$             |
+| DFT(取DFS的一个周期)        |        |                                                                          |        |                                                                                  |
+
+由时域到频率的对应关系：
+
+| 时域  | 频域  |
+| --- | --- |
+| 连续  | 非周期 |
+| 离散  | 周期  |
+| 非周期 | 连续  |
+| 周期  | 离散  |
