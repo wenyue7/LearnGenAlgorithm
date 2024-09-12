@@ -1003,6 +1003,26 @@ H(z) = \sum_{n = -\infty}^{\infty} h(n) z^{-n}
 $$
 该式称为$h(n)$的$Z$变换，$H(z)$是系统的转移函数。$h(n)$，$H(e^{jw})$及$H(z)$是描述一个LSI系统的三个重要函数
 
+### DTFT逆变换
+
+用$e^{jwm}$乘以$X(e^{jw}) = \sum_{n = -\infty}^{\infty} x(n) e^{-jwn}$的两边，并在$-\pi ~ +\pi$内对$w$积分，有：
+$$
+\begin{align}
+\int_{-\pi}^{\pi} X(e^{jw}) e^{jwm} dw
+&= \int_{-\pi}^{\pi} \left[ \sum_{n = -\infty}^{\infty} x(n) e^{-jwn} \right] e^{jwm} dw \\
+&= \sum_{n = -\infty}^{\infty} x(n) \int_{-\pi}^{\pi} e^{jw(m - n)} dw
+\end{align}
+$$
+由于$\int_{-\pi}^{\pi} e^{jw(m - n)}$是复正弦信号在$-\pi ~ + \pi$内的积分，且$m$，$n$为整数，所以，不论$m$，$n$如何取值，只有$m = n$时该积分才不为零，且积分值为$2\pi$，即
+$$
+\int_{-\pi}^{\pi} e^{jw(n - n)} dw = 2 \pi \delta(m - n)
+$$
+所以
+$$
+x(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{jw}) e^{jwn} dw
+$$
+这也是DTFT的反变换公式。
+
 ## 离散傅里叶级数
 
 
