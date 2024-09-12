@@ -369,7 +369,7 @@ $$ b_n = \frac{1}{l} \int_{-l}^{l} f(t) \sin\left(\frac{n\pi t}{l}\right) \, dt 
 
 证明：
 
-做变量代换$z=\frac{\pi x}{l}$，于是区间$-l \leq x \leq l$就变换成$-\pi \leq z \leq \pi$。设函数$f(x)=f(\frac{lz}{\pi}) = F(z))$，从而$F(z)$是周期为$2\pi$的周期函数，并且它满足收敛定理的条件，将$F(z)$展开成傅里叶级数
+做变量代换$z=\frac{\pi x}{l}$，于是区间$-l \leq x \leq l$就变换成$-\pi \leq z \leq \pi$。设函数$f(x)=f(\frac{lz}{\pi}) = F(z)$，从而$F(z)$是周期为$2\pi$的周期函数，并且它满足收敛定理的条件，将$F(z)$展开成傅里叶级数
 $$
 F(z) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( a_n \cos\left(nz\right) + b_n \sin\left(nz\right) \right) 
 $$
@@ -555,7 +555,7 @@ $$
 
 ## 傅立叶变换的进一步解释
 
-傅里叶变换实际上是将信号$x(t)$喝一组不同频率的复正弦作内积，即
+傅里叶变换实际上是将信号$x(t)$和一组不同频率的复正弦作内积，即
 $$
 \begin{cases}
 X(k\Omega_0) = <x(t), e^{jk\Omega_0t}> \quad 傅里叶级数 \\
@@ -650,33 +650,14 @@ $$
 
 $$
 \begin{align}
-Fourier Series \quad \overset{周期 \to \infty}{\longrightarrow} \quad \quad Fourier Transform \\
-Fourier Transform \quad \overset{两边乘上 u(t) e^{-\beta t}}{\longrightarrow} \quad \quad Laplace Transform \\
+&Fourier Series \quad \overset{周期 \to \infty}{\longrightarrow} \quad \quad Fourier Transform \\
+&Fourier Transform \quad \overset{两边乘上 u(t) e^{-\beta t}}{\longrightarrow} \quad \quad Laplace Transform \\
 \end{align}
 $$
 
 # 离散变换
 
 ## Z变换
-
-欧拉公式：$e^{i\theta} = \cos(\theta) + i\sin(\theta)$
-
-T为采样周期
-$$e(t) \overset{采样}{\longrightarrow} e^*(t) = \sum_{n=0}^{\infty} e(nT) \delta(t-nT) $$
-
-拉氏变换：
-$$
-E^*(s) = \int_{-\infty}^{\infty} e^*(t)e^{-st} dt \\
-= \int_{-\infty}^{\infty}[\sum_{n=0}^{\infty} e(nT) \delta(t-nT)]e^{-st}dt \\
-= \sum_{n=0}^{\infty} e(nT) [\int_{-\infty}^{\infty} \delta(t-nT)e^{-st}dt]
-$$
-
-由脉冲信号筛选性质：$\int_{-\infty}^{\infty} \delta(t-nT)f(t)dt=f(nT)$
-
-故：$E^*(s) = \sum_{n=0}^{\infty} e(nT) e^{-nsT}$
-
-令 $\delta = e^{sT}$ 得 $E(z) = E^*(s)|_{s=\frac{1}{T}ln(z)} = \sum_{n=0}^{\infty}e(nT)z^{-n}$
-
 
 ### 前备知识点
 
@@ -764,7 +745,7 @@ $$
 
 如果$a$为复数，我们可将$a$写$a = r e^{jw_0}$的形式，式中$r > 0, w_0 \neq 0, \pi$，这样，$x(n)$变成复值信号，即 $x(n) = r^{|n|}e^{jw_0|n|}$。若$r < 1$，则$x(n)$为衰减的复正弦，其实部和虚部分别为衰减的实余弦和衰减的实正弦
 
-### 推导过程
+### 推导过程(利用拉普拉斯变换)
 
 > ref: 《数字信号处理》胡广书 P54
 
@@ -812,9 +793,30 @@ $$
 x(t) \overset{采样}{\longrightarrow} x_s(nT_s) \overset{Laplace Trans}{\longrightarrow} X(s) \overset{z = e^{sT_s}}{\longrightarrow} X(z)
 $$
 
+### 推导过程_2(利用拉普拉斯变换)
+
+欧拉公式：$e^{i\theta} = \cos(\theta) + i\sin(\theta)$
+
+T为采样周期
+$$e(t) \overset{采样}{\longrightarrow} e^*(t) = \sum_{n=0}^{\infty} e(nT) \delta(t-nT) $$
+
+拉氏变换：
+$$
+E^*(s) = \int_{-\infty}^{\infty} e^*(t)e^{-st} dt \\
+= \int_{-\infty}^{\infty}[\sum_{n=0}^{\infty} e(nT) \delta(t-nT)]e^{-st}dt \\
+= \sum_{n=0}^{\infty} e(nT) [\int_{-\infty}^{\infty} \delta(t-nT)e^{-st}dt]
+$$
+
+由脉冲信号筛选性质：$\int_{-\infty}^{\infty} \delta(t-nT)f(t)dt=f(nT)$
+
+故：$E^*(s) = \sum_{n=0}^{\infty} e(nT) e^{-nsT}$
+
+令 $z = e^{sT}$ 得 $E(z) = E^*(s)|_{s=\frac{1}{T}ln(z)} = \sum_{n=0}^{\infty}e(nT)z^{-n}$
+
+
 ## 离散傅里叶变换(DTFT)
 
-### 推导过程
+### 推导过程(利用傅里叶变换)
 
 > ref: 《数字信号处理》胡广书 P55
 
@@ -822,22 +824,22 @@ $$
 
 $$
 \begin{align}
-\mathcal{F}[x(t)p_{T_s}{t}] &= \int_{-\infty}^{\infty} x(t) \sum_{k = -\infty}^{+\infty} \delta(t - nT_s) \, e^{-jwt} dt \\
-&= \sum_{k = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(t) \delta(t - nT_s) \, e^{-jwt} dt \\
-&= \sum_{k = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(nT_s) \delta(t - nT_s) \, e^{-jwnT_s} dt \\
-&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \int_{-\infty}^{\infty} \delta(t - nT_s) \, dt \\
-&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
+\mathcal{F}[x(t)p_{T_s}{t}] &= \int_{-\infty}^{\infty} x(t) \sum_{n = -\infty}^{+\infty} \delta(t - nT_s) \, e^{-jwt} dt \\
+&= \sum_{n = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(t) \delta(t - nT_s) \, e^{-jwt} dt \\
+&= \sum_{n = -\infty}^{+\infty} \int_{-\infty}^{\infty} x(nT_s) \delta(t - nT_s) \, e^{-jwnT_s} dt \\
+&= \sum_{n = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \int_{-\infty}^{\infty} \delta(t - nT_s) \, dt \\
+&= \sum_{n = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
 \end{align}
 $$
 令$\Omega = wT_s$，则
 $$
 \begin{align}
-\mathcal{F}[x(t)p_{T_s}{t}] &= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
-&= \sum_{k = -\infty}^{+\infty} x(nT_s) e^{-j\Omega n} \\
+\mathcal{F}[x(t)p_{T_s}{t}] &= \sum_{n = -\infty}^{+\infty} x(nT_s) e^{-jwnT_s} \\
+&= \sum_{n = -\infty}^{+\infty} x(nT_s) e^{-j\Omega n} \\
 \end{align}
 $$
 
-### 推导过程_法2
+### 推导过程_法2(利用z变换)
 
 > ref: 《数字信号处理》胡广书 P55
 
@@ -1004,6 +1006,9 @@ $$
 ## 离散傅里叶级数
 
 
+## 关系
+
+$Z$变换与DTFT变换有着密切的联系，可以详细阅读前边的推导过程
 
 四种形式的傅里叶变换：
 
