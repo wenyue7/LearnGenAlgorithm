@@ -1023,8 +1023,83 @@ x(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{jw}) e^{jwn} dw
 $$
 这也是DTFT的反变换公式。
 
-## 离散傅里叶级数
+### 其它
 
+有其他认为重要的内容：
+
+1. 信号截短对DTFT的影响：参考 : 《数字信号处理》胡广书 P114
+2. 频谱的周期延拓：将连续信号$x_a(t)$经抽样变成$x(nTs)$后，$x(nT_s)$的频谱将变成周期的。相对频率$\Omega$，周期为$\Omega_s = 2\pi/T_s = 2\pi f_s$，相对圆周率$w$，周期为$2\pi$。变成周期的方法是将$X_a(j\Omega)$在频率轴上以$\Omega_s$为周期移位后再叠加，并除以$T_s$。这种现象又称为频谱的周期延拓。参考 : 《数字信号处理》胡广书 P119
+3. 周期延拓的同时，可能会带来周期的混叠，更多内容参考 : 《数字信号处理》胡广书 P119
+
+## 离散时间周期信号的傅里叶级数(DFS)
+
+设$\tilde{x}(nT_s)$是周期信号$\tilde{x}(t)$的抽样，$\tilde{x}(t)$的周期为$T$，每个周期内抽N个点，即$T = NT_s$。这样，$\tilde{x}(nT_s)$也是周期的，周期为$NT_s$或$N$。由连续周期的傅立叶级数$x(t) = \sum_{k = -\infty}^{\infty} X(k\Omega_0) e^{jk\Omega_0t}$，将$\tilde{x}(t)$展成傅立叶级数，得
+$$
+\tilde{x}(t) = \sum_{k = -\infty}^{\infty} X(k\Omega_0) e^{jk\Omega_0t}
+$$
+$X(k\Omega_0)$是$\tilde{x}(t)$的傅立叶系数，所以他是离散的且是非周期的，式中$k = 0, \pm1, \dots, \pm\infty$，而$\Omega_0 = 2\pi / T = 2\pi / NT_s$。现对上式的$\tilde{x}(t)$抽样，得
+$$
+\begin{align}
+\tilde{x}(nT_s) &= \tilde{x}(t)|_{t = nT_s} \\
+&= \sum_{k} \tilde{X}(k\Omega_0)exp(jk \frac{2\pi}{NT_s} nT_s) \\
+&= \sum_{k} \tilde{X}(k\Omega_0)exp(j \frac{2\pi}{N} nk) \\
+\end{align}
+$$
+由之前的讨论可知，离散信号的频谱应该是周期的，周期为$\Omega_s$，所以上式中已将$X(k\Omega_0)$改记为$\tilde{X}(k\Omega_0)$。
+
+由以下两式：
+$$
+\begin{align}
+X(k\Omega_0) = \frac{1}{T} \int_{-T/2}^{T/2} x(t) e^{-jk\Omega_0 t} dt \\
+X(n) = \frac{1}{2\pi} \int_{-\pi}^{\pi} X(e^{jw}) e^{jwn} dw \\
+\end{align}
+$$
+可知，对周期信号的求和或者积分应在一个周期内进行，因此前边$\tilde{x}(nT_s)$，的求和也应在$X(k\Omega_0)$的一个周期内进行。现分析一下$X(k\Omega_0)$的周期是多少。
+
+由于$\Omega_s = 2\pi/T_s = 2\pi N/T = N\Omega_0$，$\Omega_0$是$\tilde{x}(t)$的基波频率，因此，在$\tilde{X}(k\Omega_0)$的一个周期内应有$N$个点，也即其周期是$N$。取其一个周期，并简记为$X(k)$。又由于
+$$
+exp(j\frac{2\pi}{N}nk) = exp \left[ j\frac{2\pi}{N}n(k + lN) \right]
+$$
+式中$l$为任意整数，所以$\tilde{x}(nT_s)$可以表示为
+$$
+\tilde{x}(nT_s) = \sum_{k = 0}^{N - 1} X(k) exp(j\frac{2\pi}{N}nk)
+$$
+当$n = 0, 1, \dots , N - 1$和$n = N, \dots , 2N - 1$时，上式所求出的结果时一样的，即此式只能计算出$N$个$\tilde{x}(nT_s)$的值。这$N$个值即$\tilde{x}(nT_s)$的一个周期，记为$x(n), n = 0, 1, \dots , N - 1$。这样 上式左边的$\tilde{x}(nT_s)$可换成$x(nT_s)$。现对上式两边做如下运算：
+$$
+\begin{align}
+\sum_{n = 0}^{N - 1} x(n) exp(-j \frac{2\pi}{N}ln) &= \sum_{n = 0}^{N - 1} \left[ \sum_{k = 0}^{N - 1} X(k) exp(j\frac{2\pi}{N}nk) \right] exp(-j\frac{2\pi}{N}nl ) \\
+&= \sum_{k = 0}^{N - 1} X(k) \sum_{n = 0}^{N - 1} exp \left[j\frac{2\pi}{N}(k - l)n \right]
+\end{align}
+$$
+由于
+$$
+\sum_{n = 0}^{N - 1} exp \left[j\frac{2\pi}{N}(k - l)n \right] =
+\begin{cases}
+N \quad \quad k - l = 0, N, 2N, \dots \\
+0 \quad \quad 其它
+\end{cases}
+$$
+故，上式的右边等于$NX(k)$，于是有
+$$
+X(k) = \frac{1}{N} \sum_{n = 0}^{N - 1} x(n) exp(-j \frac{2\pi}{N} nk)
+$$
+习惯上将定标因子$N$移到反变换中。这样，总结上述的讨论，对离散周期信号，可以得到如下两组变换式：
+<一个周期>
+$$
+\begin{cases}
+X(k) &= \sum_{n = 0}^{N - 1} x(n) exp(-j\frac{2\pi}{N}nk) \quad \quad \quad k = 0, 1, \dots, N - 1  \\
+x(n) &= \frac{1}{N} \sum_{k = 0}^{N - 1} X(k) exp(j\frac{2\pi}{N}nk) \quad \quad n = 0, 1, \dots, N - 1 \\
+\end{cases}
+$$
+和
+<所有周期>
+$$
+\begin{cases}
+\tilde{X}(k) &= \sum_{n = 0}^{N - 1} \tilde{x}(n) exp(-j\frac{2\pi}{N}nk) \quad \quad \quad k = -\infty \sim +\infty  \\
+\tilde{x}(n) &= \frac{1}{N} \sum_{k = 0}^{N - 1} \tilde{X}(k) exp(j\frac{2\pi}{N}nk) \quad \quad n = -\infty \sim +\infty \\
+\end{cases}
+$$
+上式称为离散周期序列的傅立叶级数（DFS），尽管式中标注的$n$，$k$都是从$-\infty$至$+\infty$，实际上，只能算出$N$个独立的值。DFS在时域、频域都是周期的，而且是离散的
 
 ## 关系
 
