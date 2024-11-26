@@ -1,5 +1,5 @@
 /*************************************************************************
-    > File Name: 2.tree_structure.c
+    > File Name: 1.tree_structure.c
     > Author: LiHongjin
     > Mail: 872648180@qq.com
     > Created Time: Wed 28 Aug 09:50:16 2024
@@ -88,12 +88,14 @@ int main()
     // 添加子节点到 Child2
     TreeNode* child3 = create_node("Child3");
     TreeNode* child4 = create_node("Child4");
+    TreeNode* child5 = create_node("Child5");
     add_child(child1, child3);
     add_child(child1, child4);
+    add_child(child1, child5);
 
     // 添加子节点到 Child4
-    TreeNode* child5 = create_node("Child5");
-    add_child(child4, child5);
+    TreeNode* child6 = create_node("Child6");
+    add_child(child4, child6);
 
     // 打印树结构
     char* prefix = (char*)malloc(1);
